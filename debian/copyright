@@ -1,6 +1,6 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Name: libeatmydata
-Source: <https://launchpad.net/libeatmydata>
+Upstream-Name: libeatmyxattr
+Source: <https://launchpad.net/libeatmyxattr>
 
 Files: *
 Copyright: 2008-2013 Stewart Smith <stewart@percona.com>

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Libeatmydata
+# Libeatmyxattr
 #
 # Copyright (C) 2010-2014 Stewart Smith (stewart@flamingspork.com)
 # Based heavily on work by:
@@ -12,7 +12,7 @@
 #
 
 # Get filename we want to run without path
-name=`echo $1 | sed 's/.*\/\(libeatmydata\/.*[^\/]*\)$/\1/'`
+name=`echo $1 | sed 's/.*\/\(libeatmyxattr\/.*[^\/]*\)$/\1/'`
 
 ext=`echo $name | sed 's/.*\.\([^.]*$\)/\1/'`
 if [ "x$ext" = "x$name" ]
@@ -26,22 +26,22 @@ then
 fi
 
 # Set prefix if it was given through environment
-if [ -n "$LIBEATMYDATA_TEST_PREFIX" ]
+if [ -n "$LIBEATMYXATTR_TEST_PREFIX" ]
 then
-  if [ -n "$LIBEATMYDATA_TEST_FILTER" ]
+  if [ -n "$LIBEATMYXATTR_TEST_FILTER" ]
   then
     # If filter variable is set, only apply prefix to those that match
-    for x in $LIBEATMYDATA_TEST_FILTER
+    for x in $LIBEATMYXATTR_TEST_FILTER
     do
       if [ "x$x" = "x$name" ]
       then
-        prefix="$libtool_prefix $LIBEATMYDATA_TEST_PREFIX"
+        prefix="$libtool_prefix $LIBEATMYXATTR_TEST_PREFIX"
         with=" (with prefix after filter)"
         break
       fi
     done
   else
-    prefix="$libtool_prefix $LIBEATMYDATA_TEST_PREFIX"
+    prefix="$libtool_prefix $LIBEATMYXATTR_TEST_PREFIX"
     with=" (with prefix)"
   fi
 fi
@@ -51,7 +51,7 @@ ECHO=`which echo`
 export ECHO
 
 if [[ $OSTYPE == *"darwin"* ]]; then
-  ./start_suspended.sh "$1" "$LIBEATMYDATA_TEST_ARGS" &
+  ./start_suspended.sh "$1" "$LIBEATMYXATTR_TEST_ARGS" &
   test_pid=$!
   # Wait for the test program launcher to become suspended
   while [[ "$(ps -o state= -p $test_pid)" != *"T+"* ]]; do
@@ -64,8 +64,8 @@ if [[ $OSTYPE == *"darwin"* ]]; then
   kill $dtruss_pid
   wait $dtruss_pid
 else
-  export LD_PRELOAD=./.libs/libeatmydata.so
-  strace -o $name-test.result.run "$1" "$LIBEATMYDATA_TEST_ARGS"
+  export LD_PRELOAD=./.libs/libeatmyxattr.so
+  strace -o $name-test.result.run "$1" "$LIBEATMYXATTR_TEST_ARGS"
   eret=$?
 fi
 

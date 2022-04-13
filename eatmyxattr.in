@@ -15,11 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-shlib="@libexecdir@/eatmydata.sh"
+shlib="@libexecdir@/eatmyxattr.sh"
 if [ -f "$shlib" ]; then
     . "$shlib"
 else
-    echo "Unable to locate eatmydata shell library, it was not enabled" >&2
+    echo "Unable to locate eatmyxattr shell library, it was not enabled" >&2
     exec "$@"
 fi
 
@@ -46,4 +46,4 @@ else
     fi
 fi
 
-eatmydata_exec "$@"
+eatmyxattr_exec "$@"

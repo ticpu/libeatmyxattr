@@ -15,22 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-libeatmydata="@libdir@/libeatmydata"
-name="eatmydata"
+libeatmyxattr="@libdir@/libeatmyxattr"
+name="eatmyxattr"
 
 if [ "x`uname`" = "xDarwin" ]; then
-	libeatmydata="$libeatmydata.dylib"
+	libeatmyxattr="$libeatmyxattr.dylib"
 else
-	libeatmydata="$libeatmydata.so"
+	libeatmyxattr="$libeatmyxattr.so"
 fi
 
-eatmydata_error()
+eatmyxattr_error()
 {
     echo "$name error: $1" >&2
     exit 1
 }
 
-eatmydata_exec()
+eatmyxattr_exec()
 {
     local cmd
     cmd="$1"
@@ -54,19 +54,19 @@ eatmydata_exec()
         if [ -n "$ok" ]; then
             cmd="$exe"
         else
-            eatmydata_error "unable to find '$cmd' in PATH"
+            eatmyxattr_error "unable to find '$cmd' in PATH"
         fi
     fi
 
-    # Preload libeatmydata
+    # Preload libeatmyxattr
     if [ `uname` = "Darwin" ]; then
 	export DYLD_FORCE_FLAT_NAMESPACE=1
-	export DYLD_INSERT_LIBRARIES="$libeatmydata"
+	export DYLD_INSERT_LIBRARIES="$libeatmyxattr"
     else
         if [ -n "$LD_PRELOAD" ]; then
-            export LD_PRELOAD="$libeatmydata $LD_PRELOAD"
+            export LD_PRELOAD="$libeatmyxattr $LD_PRELOAD"
         else
-            export LD_PRELOAD="$libeatmydata"
+            export LD_PRELOAD="$libeatmyxattr"
         fi
     fi
 
@@ -76,6 +76,6 @@ eatmydata_exec()
 }
 
 # Verify environment
-if [ ! -f "$libeatmydata" ]; then
-    eatmydata_error "could not find $name library $libeatmydata"
+if [ ! -f "$libeatmyxattr" ]; then
+    eatmyxattr_error "could not find $name library $libeatmyxattr"
 fi

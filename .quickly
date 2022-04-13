@@ -1,4 +1,4 @@
-project = libeatmydata
+project = libeatmyxattr
 version = 0.4.2
 template = pandora-build
 project-type = library

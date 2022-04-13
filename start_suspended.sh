@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Libeatmydata
+# Libeatmyxattr
 #
 # Copyright (C) 2017 Stewart Smith (stewart@flamingspork.com)
 # All rights reserved.
@@ -16,9 +16,9 @@
 
 kill -TSTP $$
 
-export DYLD_LIBRARY_PATH=libeatmydata/.libs
+export DYLD_LIBRARY_PATH=libeatmyxattr/.libs
 export DYLD_FORCE_FLAT_NAMESPACE=1
-export DYLD_INSERT_LIBRARIES=./.libs/libeatmydata.dylib
+export DYLD_INSERT_LIBRARIES=./.libs/libeatmyxattr.dylib
 
 exec $@
 exit $?

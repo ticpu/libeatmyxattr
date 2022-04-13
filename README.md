@@ -1,4 +1,4 @@
-libeatmydata
+libeatmyxattr
 ============
 
 An LD_PRELOAD library that disables all forms of writing data safely to disk.
@@ -7,24 +7,24 @@ fsync() becomes a NO-OP, O_SYNC is removed etc.
 The idea is to use in testing to get faster test runs where real durability is
 not required.
 
-***DO NOT*** use libeatmydata on software where you care about what it stores. It's called lib***EAT-MY-DATA*** for a *reason*.
+***DO NOT*** use libeatmyxattr on software where you care about what it stores. It's called lib***EAT-MY-DATA*** for a *reason*.
 
-see http://www.flamingspork.com/projects/libeatmydata
+see http://www.flamingspork.com/projects/libeatmyxattr
 
 Installing
 ------------
 
 Debian/Ubuntu and friends:
 ```
-apt install eatmydata
+apt install eatmyxattr
 ```
 
 To build from source, you will need `autoconf`, `autoconf-archive`, `automake`, `libtool`, and a compiler (say, `gcc`).
 
 Then, build and install like so:
 ```
-git clone https://github.com/stewartsmith/libeatmydata.git # (or extract from source tarball)
-cd libeatmydata
+git clone https://github.com/stewartsmith/libeatmyxattr.git # (or extract from source tarball)
+cd libeatmyxattr
 autoreconf -i # (if building from git only)
 ./configure
 make
@@ -37,7 +37,7 @@ Usage
 -----
 
 ```
-eatmydata foo
+eatmyxattr foo
 ```
 
 Performance Improvements
@@ -46,7 +46,7 @@ Performance Improvements
 When running part of the MySQL test suite in 2007 on my laptop:
 
 ```
-TEST                           RESULT         TIME (ms)   TIME (with libeatmydata)
+TEST                           RESULT         TIME (ms)   TIME (with libeatmyxattr)
 ----------------------------------------------------------------------------------
 
 main.innodb-lock               [ pass ]           4523     4323
@@ -76,7 +76,7 @@ sys     0m2.844s       sys     0m2.356s
 Talks/Video
 -----------
 
-libeatmydata was the product of a talk I gave back at linux.conf.au 2007, titled
+libeatmyxattr was the product of a talk I gave back at linux.conf.au 2007, titled
 "Eat My Data: How Everybody gets File IO Wrong" - I also gave this talk at OSCON.
 This talk went over the common mistakes people make when using POSIX file IO
 routines.
