@@ -1,5 +1,5 @@
 #
-# Libeatmydata
+# Libeatmyxattr
 #
 # Build infrastructure:
 # Copyright (C) 2009-2010 Monty Taylor, Eric Day
@@ -11,8 +11,8 @@
 #
 
 
-AC_INIT([libeatmydata],[131], [http://www.flamingspork.com/projects/libeatmydata])
-AC_CONFIG_SRCDIR([libeatmydata/libeatmydata.c])
+AC_INIT([libeatmyxattr],[131], [http://www.flamingspork.com/projects/libeatmyxattr])
+AC_CONFIG_SRCDIR([libeatmyxattr/libeatmyxattr.c])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -54,7 +54,7 @@ AC_CHECK_FUNCS(syncfs)
 
 AX_TLS(:,:)
 
-AC_CONFIG_FILES(Makefile libeatmydata.spec)
+AC_CONFIG_FILES(Makefile libeatmyxattr.spec)
 
 AC_OUTPUT
 

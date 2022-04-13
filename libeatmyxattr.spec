@@ -1,16 +1,16 @@
-Name:           libeatmydata
-Version:        @PACKAGE_VERSION@
+Name:           libeatmyxattr
+Version:        131
 Release:        1%{?dist}
 Group:          Development/Tools
 License:        GPLv3
 Summary:        Library and utilities designed to disable fsync and friends
 BuildRoot:      %{_tmppath}/%{name}-%{version}-root
 BuildRequires:  autoconf, automake, make, libtool, strace
-Source:         https://www.flamingspork.com/projects/libeatmydata/%{name}-%{version}.tar.gz
-URL:            https://www.flamingspork.com/projects/libeatmydata/
+Source:         https://www.flamingspork.com/projects/libeatmyxattr/%{name}-%{version}.tar.gz
+URL:            https://www.flamingspork.com/projects/libeatmyxattr/
 
 %description
-This package contains a small LD_PRELOAD library (libeatmydata) and a couple 
+This package contains a small LD_PRELOAD library (libeatmyxattr) and a couple 
 of helper utilities designed to transparently disable fsync and friends 
 (like open(O_SYNC)). This has two side-effects: making software that writes 
 data safely to disk a lot quicker and making this software no longer 
@@ -41,7 +41,7 @@ rm -fr %{buildroot}
 #
 %files
 %defattr(-,root,root)
-%attr(755,-,-) %{_bindir}/eatmydata
+%attr(755,-,-) %{_bindir}/eatmyxattr
 %{_libdir}/*
 %{_libexecdir}/*
 

@@ -1,5 +1,5 @@
 #
-# Libeatmydata
+# Libeatmyxattr
 #
 ### BEGIN LICENSE
 # Copyright (C) 2008-2021 Stewart Smith <stewart@flamingspork.com>
@@ -17,7 +17,7 @@
 ### END LICENSE
 
 ACLOCAL_AMFLAGS = -I m4
-#LDADD = libeatmydata.la
+#LDADD = libeatmyxattr.la
 
 AUTOMAKE_OPTIONS = parallel-tests
 
@@ -35,8 +35,8 @@ EXTRA_DIST = \
   AUTHORS \
   fsynctest.result \
   test_run.sh \
-  eatmydata.in \
-  eatmydata.sh.in \
+  eatmyxattr.in \
+  eatmyxattr.sh.in \
   debian/changelog \
   debian/compat \
   debian/control \
@@ -45,66 +45,65 @@ EXTRA_DIST = \
   debian/README.Debian \
   debian/rules \
   debian/source \
-  libeatmydata.spec
+  libeatmyxattr.spec
 
 
-bin_SCRIPTS = eatmydata
-libexec_SCRIPTS = eatmydata.sh
+bin_SCRIPTS = eatmyxattr
+libexec_SCRIPTS = eatmyxattr.sh
 
 do_subst = @SED@ \
 	-e 's!@''libdir''@!$(libdir)!g' \
 	-e 's!@''libexecdir''@!$(libexecdir)!g'
 
-eatmydata: eatmydata.in Makefile
-	$(do_subst) $(srcdir)/eatmydata.in > $@
-	chmod +x eatmydata
+eatmyxattr: eatmyxattr.in Makefile
+	$(do_subst) $(srcdir)/eatmyxattr.in > $@
+	chmod +x eatmyxattr
 
-eatmydata.sh: eatmydata.sh.in Makefile
-	$(do_subst) $(srcdir)/eatmydata.sh.in > $@
+eatmyxattr.sh: eatmyxattr.sh.in Makefile
+	$(do_subst) $(srcdir)/eatmyxattr.sh.in > $@
 
 #
-# libeatmydata
+# libeatmyxattr
 #
 
-lib_LTLIBRARIES += libeatmydata.la
+lib_LTLIBRARIES += libeatmyxattr.la
 
-libeatmydata_la_SOURCES = \
-  libeatmydata/libeatmydata.c
+libeatmyxattr_la_SOURCES = \
+  libeatmyxattr/libeatmyxattr.c
 
 noinst_HEADERS += \
-  libeatmydata/portability.h \
-  libeatmydata/visibility.h
+  libeatmyxattr/visibility.h
 
-libeatmydata_la_CFLAGS = \
+libeatmyxattr_la_CFLAGS = \
 	$(AM_CFLAGS) \
   $(NO_WERROR) \
-	-DBUILDING_LIBEATMYDATA
+	-DBUILDING_LIBEATMYXATTR
 
-libeatmydata_la_LIBADD = $(LIBDL_LIBS) -ldl
-libeatmydata_la_LDFLAGS = $(AM_LDFLAGS) -avoid-version
+libeatmyxattr_la_LIBADD = $(LIBDL_LIBS) -ldl
+libeatmyxattr_la_LDFLAGS = $(AM_LDFLAGS) -avoid-version
 
 #install-exec-hook:
 #	find $(DESTDIR)$(libdir) -type f -name \*.la |xargs rm -f
 
 check_PROGRAMS += \
-  libeatmydata/test/fsynctest \
-  libeatmydata/test/tst-key4 \
-  libeatmydata/test/tst-invalidfd \
-  libeatmydata/test/eatmydatatest \
-  libeatmydata/test/eatmydatatest_largefile \
-  libeatmydata/test/syncfstest \
-  libeatmydata/test/fcntltest
+  libeatmyxattr/test/fsynctest \
+  libeatmyxattr/test/tst-key4 \
+  libeatmyxattr/test/tst-invalidfd \
+  libeatmyxattr/test/eatmyxattrtest \
+  libeatmyxattr/test/eatmyxattrtest_largefile \
+  libeatmyxattr/test/syncfstest \
+  libeatmyxattr/test/fcntltest
 
 if HAVE_PTHREAD_BARRIERS
-  check_PROGRAMS += libeatmydata/test/tst-cancel4
+  check_PROGRAMS += libeatmyxattr/test/tst-cancel4
 endif
 
-libeatmydata_test_tst_cancel4_LDADD= -lpthread
+libeatmyxattr_test_tst_cancel4_LDADD= -lpthread
 
-libeatmydata_test_tst_key4_LDADD= -lpthread
+libeatmyxattr_test_tst_key4_LDADD= -lpthread
 
 #
-# Simple libeatmydata application
+# Simple libeatmyxattr application
 #
 
 TESTS = $(check_PROGRAMS)
@@ -114,28 +113,28 @@ LOG_COMPILER = ${top_srcdir}/test_run.sh
 test: distcheck
 
 check-verbose:
-	@LIBEATMYDATA_TEST_ARGS="v" make check
+	@LIBEATMYXATTR_TEST_ARGS="v" make check
 
 check-debug:
-	@LIBEATMYDATA_TEST_ARGS="vvv" make check
+	@LIBEATMYXATTR_TEST_ARGS="vvv" make check
 
 check-valgrind:
-	@LIBEATMYDATA_TEST_PREFIX="valgrind -q --leak-check=full --show-reachable=yes --suppressions=valgrind.suppressions" make check
+	@LIBEATMYXATTR_TEST_PREFIX="valgrind -q --leak-check=full --show-reachable=yes --suppressions=valgrind.suppressions" make check
 
 check-valgrind-debug:
-	@LIBEATMYDATA_TEST_PREFIX="valgrind -q --leak-check=full --show-reachable=yes --suppressions=valgrind.suppressions" LIBEATMYDATA_TEST_ARGS="vvv" make check
+	@LIBEATMYXATTR_TEST_PREFIX="valgrind -q --leak-check=full --show-reachable=yes --suppressions=valgrind.suppressions" LIBEATMYXATTR_TEST_ARGS="vvv" make check
 
 check-gdb:
-	@LIBEATMYDATA_TEST_PREFIX="gdb -q" make check
+	@LIBEATMYXATTR_TEST_PREFIX="gdb -q" make check
 
 check-time:
-	@LIBEATMYDATA_TEST_PREFIX="/usr/bin/time" make check
+	@LIBEATMYXATTR_TEST_PREFIX="/usr/bin/time" make check
 
 check-strace:
-	@LIBEATMYDATA_TEST_PREFIX="strace -c" make check
+	@LIBEATMYXATTR_TEST_PREFIX="strace -c" make check
 
 check-truss:
-	@LIBEATMYDATA_TEST_PREFIX="truss -c" make check
+	@LIBEATMYXATTR_TEST_PREFIX="truss -c" make check
 
 lcov: lcov-clean check
 	@echo
@@ -143,9 +142,9 @@ lcov: lcov-clean check
 	@echo "Make sure ./configure was run with '--enable-coverage'"
 	@echo "------------------------------------------------------"
 	@echo
-	cd libeatmydata && lcov --directory . --base-directory .. --capture --output-file lcov.out
-	cd libeatmydata && lcov --directory . --base-directory .. --extract lcov.out `pwd`/\* --output-file lcov_extract.out
-	genhtml -o lcov -t libeatmydata libeatmydata/lcov_extract.out
+	cd libeatmyxattr && lcov --directory . --base-directory .. --capture --output-file lcov.out
+	cd libeatmyxattr && lcov --directory . --base-directory .. --extract lcov.out `pwd`/\* --output-file lcov_extract.out
+	genhtml -o lcov -t libeatmyxattr libeatmyxattr/lcov_extract.out
 
 lcov-clean: clean
 	find . -name '*.gcno' -exec rm {} \;
