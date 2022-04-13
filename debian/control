@@ -1,7 +1,7 @@
 Source: libeatmyxattr
 Section: main
 Priority: extra
-Maintainer: Stewart Smith <stewart@flamingspork.com>
+Maintainer: Jérôme Poulin <jeromepoulin@gmail.com>
 Build-Depends: debhelper (>= 8.0.0)
 Standards-Version: 3.9.2
 Homepage: https://launchpad.net/libeatmyxattr
