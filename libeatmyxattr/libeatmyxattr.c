@@ -16,6 +16,8 @@
 #include "config.h"
 #include "libeatmyxattr/visibility.h"
 
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+#include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <errno.h>
@@ -77,35 +79,60 @@ void __attribute__ ((constructor)) eatmyxattr_init(void)
 	init_complete++;
 }
 
+static const char attr_list[] = "system.posix_acl_access";
+
+static ssize_t fake_listxattr(char *list, size_t size)
+{
+	size_t copy_size = MIN(sizeof(attr_list), size);
+
+	if (list == NULL || size == 0)
+		return sizeof(attr_list);
+
+	memcpy(list, attr_list, copy_size);
+	return copy_size;
+}
+
 ssize_t LIBEATMYXATTR_API listxattr(const char *path, char *list, size_t size)
 {
-	return 0;
+	return fake_listxattr(list, size);
 }
 
 ssize_t LIBEATMYXATTR_API getxattr(const char *path, const char *name, void *value, size_t size)
 {
+	if (memcmp(name, attr_list, sizeof(attr_list)) == 0) {
+		return (*libc_getxattr)(path, name, value, size);
+	}
+
 	errno = ENODATA;
 	return -1;
 }
 
 ssize_t LIBEATMYXATTR_API llistxattr(const char *path, char *list, size_t size)
 {
-	return 0;
+	return fake_listxattr(list, size);
 }
 
 ssize_t LIBEATMYXATTR_API lgetxattr(const char *path, const char *name, void *value, size_t size)
 {
+	if (memcmp(name, attr_list, sizeof(attr_list)) == 0) {
+		return (*libc_lgetxattr)(path, name, value, size);
+	}
+
 	errno = ENODATA;
 	return -1;
 }
 
 ssize_t LIBEATMYXATTR_API flistxattr(int fd, char *list, size_t size)
 {
-	return 0;
+	return fake_listxattr(list, size);
 }
 
 ssize_t LIBEATMYXATTR_API fgetxattr(int fd, const char *name, void *value, size_t size)
 {
+	if (memcmp(name, attr_list, sizeof(attr_list)) == 0) {
+		return (*libc_fgetxattr)(fd, name, value, size);
+	}
+
 	errno = ENODATA;
 	return -1;
 }
